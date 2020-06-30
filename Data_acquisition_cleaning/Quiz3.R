@@ -16,33 +16,34 @@
 
 
 # Question 3 --HOW DO I USE PIPE?????----
-library(dplyr)
-library(data.table)
-gdpurl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv"
-gdppath <- "q3gdp.csv"
-educationurl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FEDSTATS_Country.csv"
-educationpath <- "q3education.csv"
-
-download.file(gdpurl, gdppath, method="curl")
-download.file(educationurl, educationpath, method="curl")
-
-gdp <- fread(gdppath, skip=5, select=c(1,2,4,5), nrows=190, col.names=c("CountryCode", "Rank", "Economy", "GDP"))
-education <- fread(educationpath)
-print(gdp)
-merged <- merge(gdp, education, by="CountryCode") %>% arrange(desc(Rank))
-print(merged[13, "CountryCode"])
-print(nrow(merged))
-# Question 4
 # library(dplyr)
-# gdp <- read.csv(url("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv"))
-# education <- read.csv(url("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FEDSTATS_Country.csv"))
-# education_new <- left_join(education, gdp, by=c("CountryCode" = "X"))
-# ed_grouped <- group_by(education_new, Income.Group)
-# ed_grouped <- na_if(ed_grouped, "")
-# ed_grouped <- ed_grouped[complete.cases(ed_grouped$Gross.domestic.product.2012), ]
-# ed_grouped <- select(ed_grouped, Income.Group, Gross.domestic.product.2012)
-# print(head(ed_grouped))
-# print(summarise(ed_grouped, avg = mean(as.numeric(Gross.domestic.product.2012))))
+# library(data.table)
+# gdpurl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv"
+# gdppath <- "q3gdp.csv"
+# educationurl <- "https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FEDSTATS_Country.csv"
+# educationpath <- "q3education.csv"
+# 
+# download.file(gdpurl, gdppath, method="curl")
+# download.file(educationurl, educationpath, method="curl")
+# 
+# gdp <- fread(gdppath, skip=5, select=c(1,2,4,5), nrows=190, col.names=c("CountryCode", "Rank", "Economy", "GDP"))
+# education <- fread(educationpath)
+# print(gdp)
+# merged <- merge(gdp, education, by="CountryCode") %>% arrange(desc(Rank))
+# print(merged[13, "CountryCode"])
+# print(nrow(merged))
+# Question 4
+library(dplyr)
+gdp <- read.csv(url("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FGDP.csv"))
+education <- read.csv(url("https://d396qusza40orc.cloudfront.net/getdata%2Fdata%2FEDSTATS_Country.csv"))
+education_new <- left_join(education, gdp, by=c("CountryCode" = "X"))
+print(education_new)
+ed_grouped <- group_by(education_new, Income.Group)
+ed_grouped <- na_if(ed_grouped, "")
+ed_grouped <- ed_grouped[complete.cases(ed_grouped$Gross.domestic.product.2012), ]
+ed_grouped <- select(ed_grouped, Income.Group, Gross.domestic.product.2012)
+print(head(ed_grouped))
+print(summarise(ed_grouped, avg = mean(as.numeric(Gross.domestic.product.2012))))
 
 # Question 5
 # library(dplyr)
